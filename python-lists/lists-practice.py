@@ -8,15 +8,17 @@ particular value.
 Then, use "Test Run" and "Submit" to run the test cases
 at the bottom."""
 
+
 class Element(object):
     def __init__(self, value):
         self.value = value
         self.next = None
-        
+
+
 class LinkedList(object):
     def __init__(self, head=None):
         self.head = head
-        
+
     def append(self, new_element):
         current = self.head
         if self.head:
@@ -25,7 +27,7 @@ class LinkedList(object):
             current.next = new_element
         else:
             self.head = new_element
-            
+
     def get_position(self, position):
         """Get an element from a particular position.
         Assume the first position is "1".
@@ -34,14 +36,14 @@ class LinkedList(object):
         current = self.head
 
         # Keep going to the next item until position is 1 or
-        # there is not another node to go to 
+        # there is not another node to go to
         while current and position > 1:
             position -= 1
             current = current.next
 
         # Send back what the current node value is
         return current
-    
+
     def insert(self, new_element, position):
         """Insert a new node at the given position.
         Assume the first position is "1".
@@ -51,25 +53,69 @@ class LinkedList(object):
         tmp = current.next
         current.next = new_element
         current.next.next = tmp
-    
-    
+
+        # My version
+
+    # def delete(self, value):
+    #     """Delete the first node with a given value."""
+    #     current = self.head
+    #     tmp = None
+
+    #     # Only run if the first value is the node to delete
+    #     if self.head.value is value:
+    #         tmp = self.head
+    #         self.head = self.head.next
+    #         tmp = None
+
+    #     while current.value is not value:
+    #         tmp = current
+    #         current = current.next
+    #     else:
+    #         current.next = current.next.next
+    #         current = tmp
+
     def delete(self, value):
-        """Delete the first node with a given value."""
-        current = self.head
+        # Store the head node
+        tmp = self.head
+
+        # If the head is the value we want to delete
+        if tmp is not None:
+            if tmp.value == value:
+                self.head = tmp.next
+                tmp = None
+                return
+
+        # Search for the value to be deleted. Keep track of
+        # the previous node as we need to change prev.next
+        while tmp is not None:
+            if tmp.value == value:
+                break
+            prev = tmp
+            tmp = tmp.next
+
+        # If key was not present in linked list
+        if tmp == None:
+            return
+
+        # Unlink the node from the linked list
+        prev.next = tmp.next
         tmp = None
-        
-        # Only run if the first value is the node to delete
-        if self.head.value is value:
-            tmp = self.head
-            self.head = self.head.next
-            tmp = None
-        
-        while current.value is not value:
-            tmp = current
-            current = current.next
-        else:
-            current.next = current.next.next
-            current = tmp
+
+
+"""
+I was missing a few key steps in my solution. Mine didn't have
+any clean up. The value in tmp just lingered until the function
+finished running. Also the function would run through the entire
+list rather than breaking once it found the value. Also I believe
+the way they have their values labeled for tmp and prev is much
+more easily understood than me having current and tmp. We are 
+more focused on the previous value than the current as we need
+to link the previous value with the value after the one we are
+trying to delete. Finally I was missing the return if the value
+did not exist. That was a key point of the process and wasn't
+tested in the course even though it was stated.
+"""
+
 
 # Test cases
 # Set up some Elements
@@ -85,20 +131,20 @@ ll.append(e3)
 
 # Test get_position
 # Should print 3
-print ll.head.next.next.value
+print(ll.head.next.next.value)
 # Should also print 3
-print ll.get_position(3).value
+print(ll.get_position(3).value)
 
 # Test insert
-ll.insert(e4,3)
+ll.insert(e4, 3)
 # Should print 4 now
-print ll.get_position(3).value
+print(ll.get_position(3).value)
 
 # Test delete
 ll.delete(1)
 # Should print 2 now
-print ll.get_position(1).value
+print(ll.get_position(1).value)
 # Should print 4 now
-print ll.get_position(2).value
+print(ll.get_position(2).value)
 # Should print 3 now
-print ll.get_position(3).value
+print(ll.get_position(3).value)
