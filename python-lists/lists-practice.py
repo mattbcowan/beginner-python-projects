@@ -30,7 +30,17 @@ class LinkedList(object):
         """Get an element from a particular position.
         Assume the first position is "1".
         Return "None" if position is not in the list."""
-        return None
+        # Current Position in Linked List
+        current = self.head
+
+        # Keep going to the next item until position is 1 or
+        # there is not another node to go to 
+        while current and position > 1:
+            position -= 1
+            current = current.next
+
+        # Send back what the current node value is
+        return current
     
     def insert(self, new_element, position):
         """Insert a new node at the given position.
