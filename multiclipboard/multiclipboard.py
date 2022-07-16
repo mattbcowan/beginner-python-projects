@@ -37,6 +37,14 @@ if len(sys.argv) == 2:
             print("Key does not exist")
     elif command == "list":
         print(data)
+    elif command == "delete":
+        key = input("Enter a key: ")
+        if key in data:
+            del data[key]
+            save_data(SAVED_DATA, data)
+            print(f"{key} has been deleted.")
+        else:
+            print("Key does not exist.")
     else:
         print("Unknown command")
 else:
