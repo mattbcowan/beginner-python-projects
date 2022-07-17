@@ -1,8 +1,8 @@
 import motor.motor_asyncio
 from bson.objectid import ObjectId
-from ..config import settings
+from decouple import config
 
-MONGO_DETAILS = settings.mongo_db
+MONGO_DETAILS = config("MONGO_DETAILS")
 client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_DETAILS)
 database = client.satisfactory_planner
 resource_collection = database.get_collection("resources")
