@@ -1,7 +1,8 @@
 import motor.motor_asyncio
 from bson.objectid import ObjectId
+from ..config import settings
 
-MONGO_DETAILS = "IGNORE"
+MONGO_DETAILS = settings.mongo_db
 client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_DETAILS)
 database = client.satisfactory_planner
 resource_collection = database.get_collection("resources")
