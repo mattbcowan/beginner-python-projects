@@ -1,5 +1,5 @@
 import re
-from PyPDF2 import PdfReader, PdfWriter
+import PyPDF2 as pdf
 
 
 def data_merge(content):
@@ -9,11 +9,23 @@ def data_merge(content):
         print(line)
 
 
-reader = PdfReader("test.pdf")
+file = open("test.pdf", "rb")
+reader = pdf.PdfReader(file)
 page = reader.getPage(0)
 text = page.extract_text()
 
 start = "<<"
 end = ">>"
-result = text[text.find(start) + len(start) : text.find(end)]
-print(result)
+text_before = text[: text.find(start)]
+# text_to_replace = text[text.find(start) + len(start) : text.find(end)]
+replacement_text = " LOL "
+text_after = text[text.find(end) + 2 :]
+
+replaced_text = text_before + replacement_text + text_after
+
+text = replaced_text
+
+writer = pdf.PdfWriter()
+
+
+print(replaced_text)
