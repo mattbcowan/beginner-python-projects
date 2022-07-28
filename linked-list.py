@@ -1,7 +1,8 @@
 class Node:
-    def __init__(self, data=None, next=None):
+    def __init__(self, data=None, next=None, prev=None):
         self.data = data
         self.next = next
+        self.prev = prev
 
 
 class LinkedList:
@@ -9,10 +10,11 @@ class LinkedList:
         self.head = None
 
     def insert_at_beginning(self, data):
-        node = Node(data, self.head)
+        node = Node(data, self.head, None)
         self.head = node
+        self.head.next.prev = self.head
 
-    def print(self):
+    def print_forward(self):
         if self.head is None:
             print("Linked list is empty")
             return
@@ -26,16 +28,33 @@ class LinkedList:
 
         print(linked_list_string)
 
+    def print_backward(self):
+        if self.head is None:
+            print("Linked list is empty")
+            return
+
+        itr = self.head
+        linked_list_string = ""
+
+        while itr.next:
+            itr = itr.next
+
+        while itr:
+            linked_list_string += "<--" + str(itr.data)
+            itr = itr.prev
+
+        print(linked_list_string)
+
     def insert_at_end(self, data):
         if self.head is None:
-            self.head = Node(data, None)
+            self.head = Node(data, None, None)
             return
 
         itr = self.head
         while itr.next:
             itr = itr.next
 
-        itr.next = Node(data, None)
+        itr.next = Node(data, None, itr)
 
     def insert_values(self, data_list):
         self.head = None
@@ -64,6 +83,7 @@ class LinkedList:
         while itr:
             if count == index - 1:
                 itr.next = itr.next.next
+                itr.next.prev = itr
                 break
 
             itr = itr.next
@@ -82,8 +102,10 @@ class LinkedList:
 
         while itr:
             if count == index - 1:
-                node = Node(data, itr.next)
+                itr.next.prev = None
+                node = Node(data, itr.next, itr)
                 itr.next = node
+                itr.next.next.prev = node
                 break
 
             itr = itr.next
@@ -95,8 +117,10 @@ class LinkedList:
 
         while itr:
             if itr.data == data_after:
+                itr.next.prev = None
                 tmp = itr.next
-                itr.next = Node(data_to_insert, tmp)
+                itr.next = Node(data_to_insert, tmp, itr)
+                itr.next.next.prev = itr.next
                 break
 
             itr = itr.next
@@ -110,7 +134,9 @@ class LinkedList:
 
         while itr.next:
             if itr.next.data == data:
+                itr.next.next.prev = None
                 itr.next = itr.next.next
+                itr.next.prev = itr
                 return
 
             itr = itr.next
@@ -122,6 +148,11 @@ class LinkedList:
 if __name__ == "__main__":
     ll = LinkedList()
     ll.insert_values(["banana", "mango", "grapes", "orange"])
-    ll.print()
-    ll.remove_by_value("orange")
-    ll.print()
+    ll.print_forward()
+    ll.insert_after_value("mango", "figs")
+    ll.print_forward()
+    ll.print_backward()
+    ll.remove_by_value("grapes")
+    ll.insert_at(2, "jackfruit")
+    ll.print_forward()
+    ll.print_backward()
