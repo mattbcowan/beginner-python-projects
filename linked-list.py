@@ -105,10 +105,23 @@ class LinkedList:
         if count >= self.get_length():
             raise Exception("Data does not exist")
 
+    def remove_by_value(self, data):
+        itr = self.head
+
+        while itr.next:
+            if itr.next.data == data:
+                itr.next = itr.next.next
+                return
+
+            itr = itr.next
+
+        if itr.next is None:
+            raise Exception("Data does not exist")
+
 
 if __name__ == "__main__":
     ll = LinkedList()
     ll.insert_values(["banana", "mango", "grapes", "orange"])
     ll.print()
-    ll.insert_after_value("orange", "apple")
+    ll.remove_by_value("orange")
     ll.print()
