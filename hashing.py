@@ -8,3 +8,7 @@ class HashTable:
         for char in key:
             h += ord(char)
         return h % self.MAX
+
+    def add(self, key, val):
+        h = self.get_hash(key)
+        self.arr[h] = val
