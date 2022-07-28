@@ -12,3 +12,12 @@ class HashTable:
     def add(self, key, val):
         h = self.get_hash(key)
         self.arr[h] = val
+
+    def get(self, key):
+        h = self.get_hash(key)
+        return self.arr[h]
+
+
+t = HashTable()
+t.add("march 6", 130)
+print(t.get("march 6"))
