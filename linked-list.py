@@ -89,10 +89,26 @@ class LinkedList:
             itr = itr.next
             count += 1
 
+    def insert_after_value(self, data_after, data_to_insert):
+        itr = self.head
+        count = 0
+
+        while itr:
+            if itr.data == data_after:
+                tmp = itr.next
+                itr.next = Node(data_to_insert, tmp)
+                break
+
+            itr = itr.next
+            count += 1
+
+        if count >= self.get_length():
+            raise Exception("Data does not exist")
+
 
 if __name__ == "__main__":
     ll = LinkedList()
     ll.insert_values(["banana", "mango", "grapes", "orange"])
     ll.print()
-    ll.insert_at(3, "figs")
+    ll.insert_after_value("orange", "apple")
     ll.print()
