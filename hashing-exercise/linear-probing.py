@@ -11,7 +11,14 @@ class HashTable:
 
     # Overriding Operators
     def __setitem__(self, key, val):
-        pass
+        hash = self.get_hash(key)
+        if self.arr[hash] is None:
+            self.arr[hash] = (key, val)
+        else:
+            for i in range(len(self.arr)):
+                if self.arr[i] is None:
+                    self.arr[i] = (key, val)
+                    break
 
     def __getitem__(self, key):
         pass
@@ -25,9 +32,5 @@ t["march 6"] = 130
 t["march 9"] = 459
 t["march 17"] = 20
 t["march 21"] = 27
-
-print(t.arr)
-
-del t["march 6"]
 
 print(t.arr)
