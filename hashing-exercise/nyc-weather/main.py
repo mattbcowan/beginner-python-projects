@@ -25,7 +25,6 @@ def get_average_temp(month, start_day, end_day):
     # ISSUE: WHAT IF WEEK IS BETWEEN MONTHS? EX: Jan 29 - Feb 4
     for day in range(start_day, end_day + 1):
         date = month + " " + str(day)
-        print(date)
         total_temp += data[date]
 
     # Get the total temp and divide by days of the week
@@ -34,4 +33,14 @@ def get_average_temp(month, start_day, end_day):
     return avg_temp
 
 
+def get_max_temp(list):
+    temps = list.values()
+    highest = 0
+    for e in temps:
+        if e > highest:
+            highest = e
+    return highest
+
+
 print(get_average_temp("Jan", 1, 7))
+print(get_max_temp(data))
