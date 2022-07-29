@@ -57,8 +57,30 @@ def is_balanced(str):
     return True
 
 
-print(is_balanced("({a+b})"))
-print(is_balanced("))((a+b}{"))
-print(is_balanced("((a+b))"))
-print(is_balanced("))"))
-print(is_balanced("[a+b]*(x+2y)*{gg+kk}"))
+def is_match(ch1, ch2):
+    match_dict = {")": "(", "]": "[", "}": "{"}
+
+    return match_dict[ch1] == ch2
+
+
+def is_balanced_alt(str):
+    stack = Stack()
+
+    for ch in str:
+        if ch == "(" or ch == "{" or ch == "[":
+            stack.push(ch)
+
+        if ch == ")" or ch == "}" or ch == "]":
+            if stack.size() == 0:
+                return False
+            if not is_match(ch, stack.pop()):
+                return False
+
+    return stack.size() == 0
+
+
+print(is_balanced_alt("({a+b})"))
+print(is_balanced_alt("))((a+b}{"))
+print(is_balanced_alt("((a+b))"))
+print(is_balanced_alt("))"))
+print(is_balanced_alt("[a+b]*(x+2y)*{gg+kk}"))
