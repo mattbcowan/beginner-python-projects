@@ -23,18 +23,17 @@ class Stack:
 
 def reverse_string(str):
     stack = Stack()
-    rev = []
+    rev = ""
     for letter in str:
         stack.push(letter)
 
     while not stack.is_empty():
-        letter = stack.pop()
-        rev.append(letter)
+        rev += stack.pop()
 
-    return "".join(rev)
+    return rev
 
 
-# print(reverse_string("We will conquere COVID-19"))
+print(reverse_string("We will conquere COVID-19"))
 
 
 def is_balanced(str):
