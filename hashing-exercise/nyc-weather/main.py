@@ -1,46 +1,39 @@
-# Objectives:
+# Best option for data structure is an array since we
+# are only looking for the temps
+arr = []
+
+with open("nyc_weather.csv", "r") as f:
+    for line in f:
+        tokens = line.split(",")
+
+        try:
+            temperature = int(tokens[1])
+            arr.append(temperature)
+        except:
+            print("Invalid Temperature. Ignoring Row")
+
 # Solve what is the average temp in the first week of Jan
+print(sum(arr[0:7]) / len(arr[0:7]))
 # Solve what was the maximum temp in the first 10 days of Jan
+print(max(arr[0:10]))
 
-# Read CSV
-import csv
 
-file = open("nyc_weather.csv")
-csvreader = csv.reader(file)
-
-# Store the header info
-header = []
-header = next(csvreader)
-
-# Add CSV Data to HashTable
+# Best choice is dictionary for this because we are looking
+# up by key to find the value
 data = {}
-for row in csvreader:
-    data[row[0]] = int(row[1])
 
-# Function to get average temperature between certain days
-def get_average_temp(month, start_day, end_day):
-    total_temp = 0
+with open("nyc_weather.csv", "r") as f:
+    for line in f:
+        tokens = line.split(",")
 
-    # Iterate over days between the start and end day
-    # ISSUE: WHAT IF WEEK IS BETWEEN MONTHS? EX: Jan 29 - Feb 4
-    for day in range(start_day, end_day + 1):
-        date = month + " " + str(day)
-        total_temp += data[date]
+        try:
+            temp = int(tokens[1])
+            data[tokens[0]] = temp
+        except:
+            print("Invalid data. Skipped.")
 
-    # Get the total temp and divide by days of the week
-    # Limit decimal places to 1 place for ease of reading
-    avg_temp = round(total_temp / (end_day - start_day), 1)
-    return avg_temp
+# What was the temperature on Jan 9
+print(data["Jan 9"])
 
-
-def get_max_temp(list):
-    temps = list.values()
-    highest = 0
-    for e in temps:
-        if e > highest:
-            highest = e
-    return highest
-
-
-print(get_average_temp("Jan", 1, 7))
-print(get_max_temp(data))
+# What was the temperature on Jan 4
+print(data["Jan 4"])
