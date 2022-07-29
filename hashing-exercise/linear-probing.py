@@ -21,7 +21,17 @@ class HashTable:
                     break
 
     def __getitem__(self, key):
-        pass
+        hash = self.get_hash(key)
+
+        if not self.arr[hash]:
+            raise Exception("There is no item with that key in the HashTable")
+
+        if self.arr[hash][0] == key:
+            return self.arr[hash][1]
+        else:
+            for i in range(len(self.arr)):
+                if self.arr[i][0] == key:
+                    return self.arr[i][1]
 
     def __delitem__(self, key):
         pass
@@ -33,4 +43,7 @@ t["march 9"] = 459
 t["march 17"] = 20
 t["march 21"] = 27
 
-print(t.arr)
+print(t["march 6"])
+print(t["march 9"])
+print(t["march 17"])
+print(t["march 21"])
