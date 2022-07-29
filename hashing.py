@@ -9,6 +9,7 @@ class HashTable:
             h += ord(char)
         return h % self.MAX
 
+    # Overriding Operators
     def __setitem__(self, key, val):
         h = self.get_hash(key)
         self.arr[h] = val
@@ -17,7 +18,15 @@ class HashTable:
         h = self.get_hash(key)
         return self.arr[h]
 
+    def __delitem__(self, key):
+        h = self.get_hash(key)
+        self.arr[h] = None
+
 
 t = HashTable()
 t["march 6"] = 130
+t["march 1"] = 20
+t["dec 17"] = 27
+print(t["march 6"])
+del t["march 6"]
 print(t["march 6"])
