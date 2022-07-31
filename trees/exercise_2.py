@@ -20,10 +20,12 @@ class TreeNode:
         return level
 
     def print_tree(self, level):
+        if self.get_level() > level:
+            return
         spaces = " " * self.get_level() * 3
         prefix = spaces + "|--" if self.parent else ""
         print(prefix + self.data)
-        if self.children and self.get_level() < level:
+        if self.children:
             for child in self.children:
                 child.print_tree(level)
 
