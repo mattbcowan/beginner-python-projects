@@ -20,16 +20,16 @@ class TreeNode:
         return level
 
     def print_tree(self, type):
+        if type == "name":
+            value = self.data["name"]
+        elif type == "designation":
+            value = self.data["title"]
+        else:
+            value = self.data["name"] + " (" + self.data["title"] + ")"
+
         spaces = " " * self.get_level() * 3
         prefix = spaces + "|--" if self.parent else ""
-        if type == "name":
-            print(prefix + self.data["name"])
-
-        if type == "designation":
-            print(prefix + self.data["title"])
-
-        if type == "both":
-            print(prefix + self.data["name"] + " (" + self.data["title"] + ")")
+        print(prefix + value)
 
         if self.children:
             for child in self.children:
@@ -62,5 +62,5 @@ def build_product_tree():
 
 if __name__ == "__main__":
     root = build_product_tree()
-    root.print_tree("both")
+    root.print_tree("name")
     pass
