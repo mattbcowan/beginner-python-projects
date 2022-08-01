@@ -55,10 +55,7 @@ class BinarySearchTreeNode:
         return elements
 
     def pre_order_traversal(self):
-        elements = []
-
-        # visit base node
-        elements.append(self.data)
+        elements = [self.data]
 
         # Visit left tree
         if self.left:
@@ -89,16 +86,20 @@ class BinarySearchTreeNode:
                 return False
 
     def find_min(self):
-        elements = self.in_order_traversal()
-        return elements[0]
+        if self.left is None:
+            return self.data
+        return self.left.find_min()
 
     def find_max(self):
-        elements = self.in_order_traversal()
-        return elements[-1]
+        if self.right is None:
+            return self.data
+        return self.right.find_max()
 
     def calculate_sum(self):
-        elements = self.in_order_traversal()
-        return sum(elements)
+        left_sum = self.left.calculate_sum() if self.left else 0
+        right_sum = self.right.calculate_sum() if self.right else 0
+
+        return self.data + left_sum + right_sum
 
 
 def build_tree(elements):
