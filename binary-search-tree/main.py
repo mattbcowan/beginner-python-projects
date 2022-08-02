@@ -56,6 +56,40 @@ class BinarySearchTreeNode:
             else:
                 return False
 
+    def find_min(self):
+        if self.left is None:
+            return self.data
+        return self.left.find_min()
+
+    def find_max(self):
+        if self.right is None:
+            return self.data
+        return self.right.find_max()
+
+    def delete(self, val):
+        if val < self.data:
+            if self.left:
+                self.left = self.left.delete(val)
+        elif val > self.data:
+            if self.right:
+                self.right = self.right.delete(val)
+        else:
+            if self.left is None and self.right is None:
+                return None
+
+            if self.left is None:
+                return self.right
+
+            if self.right is None:
+                return self.left
+
+            # Find minimum solution
+            min_val = self.right.find_min()
+            self.data = min_val
+            self.right = self.right.delete(min_val)
+
+        return self
+
 
 def build_tree(elements):
     root = BinarySearchTreeNode(elements[0])
@@ -67,14 +101,8 @@ def build_tree(elements):
 
 
 if __name__ == "__main__":
-    countries = ["India", "Pakistan", "Germany", "USA", "China", "India", "UK", "USA"]
-    country_tree = build_tree(countries)
+    numbers = [17, 4, 1, 20, 9, 23, 18, 34]
+    numbers_tree = build_tree(numbers)
+    numbers_tree.delete(9)
 
-    print("UK is in the list? ", country_tree.search("UK"))
-    print("Sweden is in the list? ", country_tree.search("Sweden"))
-    print(country_tree.in_order_traversal())
-    # numbers = [17, 4, 1, 20, 9, 23, 18, 34]
-    # numbers_tree = build_tree(numbers)
-
-    # print(numbers_tree.in_order_traversal())
-    # print(numbers_tree.search(21))
+    print(numbers_tree.in_order_traversal())
