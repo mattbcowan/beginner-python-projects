@@ -18,24 +18,48 @@ def binary_search(numbers_list, number_to_find):
     return -1
 
 
+# Matt Attempt
+# def binary_search_all_occurrences(numbers_list, number_to_find):
+#     find_index = binary_search(numbers_list, number_to_find)
+#     prev_index = find_index - 1
+#     all_occurrences = []
+
+#     if find_index == -1:
+#         return -1
+
+#     if numbers_list[prev_index] == number_to_find:
+#         while numbers_list[prev_index] == number_to_find:
+#             all_occurrences.insert(0, prev_index)
+#             prev_index -= 1
+
+#     while numbers_list[find_index] == number_to_find:
+#         all_occurrences.append(find_index)
+#         find_index += 1
+
+#     return all_occurrences
+
+# Alternate Answer
 def binary_search_all_occurrences(numbers_list, number_to_find):
-    find_index = binary_search(numbers_list, number_to_find)
-    prev_index = find_index - 1
-    all_occurrences = []
+    index = binary_search(numbers_list, number_to_find)
+    indices = [index]
 
-    if find_index == -1:
-        return -1
+    i = index - 1
+    while i >= 0:
+        if numbers_list[i] == number_to_find:
+            indices.append(i)
+        else:
+            break
+        i = i - 1
 
-    if numbers_list[prev_index] == number_to_find:
-        while numbers_list[prev_index] == number_to_find:
-            all_occurrences.insert(0, prev_index)
-            prev_index -= 1
+    i = index + 1
+    while i < len(numbers_list):
+        if numbers_list[i] == number_to_find:
+            indices.append(i)
+        else:
+            break
+        i = i + 1
 
-    while numbers_list[find_index] == number_to_find:
-        all_occurrences.append(find_index)
-        find_index += 1
-
-    return all_occurrences
+    return sorted(indices)
 
 
 # Find index of all occurrences of a number in a sorted list
