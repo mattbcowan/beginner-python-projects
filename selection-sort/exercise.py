@@ -1,3 +1,6 @@
+from pprint import pprint
+
+
 def selection_sort(arr):
     size = len(arr)
     for i in range(size - 1):
@@ -10,24 +13,35 @@ def selection_sort(arr):
             arr[i], arr[min_index] = arr[min_index], arr[i]
 
 
+# def selection_sort_multi(arr, keys):
+#     size = len(arr)
+
+#     for i in range(size - 1):
+#         min_index = i
+#         for j in range(min_index + 1, size):
+#             curr_key_index = 0
+#             if arr[j][keys[curr_key_index]] == arr[min_index][keys[curr_key_index]]:
+#                 if (
+#                     arr[j][keys[curr_key_index + 1]]
+#                     < arr[min_index][keys[curr_key_index + 1]]
+#                 ):
+#                     min_index = j
+#             if arr[j][keys[curr_key_index]] < arr[min_index][keys[curr_key_index]]:
+#                 min_index = j
+
+#         if i != min_index:
+#             arr[i], arr[min_index] = arr[min_index], arr[i]
+
+
 def selection_sort_multi(arr, keys):
-    size = len(arr)
-
-    for i in range(size - 1):
-        min_index = i
-        for j in range(min_index + 1, size):
-            curr_key_index = 0
-            if arr[j][keys[curr_key_index]] == arr[min_index][keys[curr_key_index]]:
-                if (
-                    arr[j][keys[curr_key_index + 1]]
-                    < arr[min_index][keys[curr_key_index + 1]]
-                ):
-                    min_index = j
-            if arr[j][keys[curr_key_index]] < arr[min_index][keys[curr_key_index]]:
-                min_index = j
-
-        if i != min_index:
-            arr[i], arr[min_index] = arr[min_index], arr[i]
+    for key in keys[-1::-1]:
+        for x in range(len(arr)):
+            min_index = x
+            for y in range(x, len(arr)):
+                if arr[y][key] < arr[min_index][key]:
+                    min_index = y
+                if x != min_index:
+                    arr[x], arr[min_index] = arr[min_index], arr[x]
 
 
 if __name__ == "__main__":
@@ -49,4 +63,4 @@ if __name__ == "__main__":
     ]
     selection_sort_multi(elements, ["First Name", "Last Name"])
 
-    print(elements)
+    pprint(elements)
